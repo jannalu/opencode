@@ -1,0 +1,14 @@
+Generate a piece of ASCII art featuring Scotty the Scottish Terrier, the Carnegie Mellon University mascot.
+
+User customization request:
+$ARGUMENTS
+
+Requirements:
+- Output ASCII art of a Scottish Terrier.
+- Make Scotty recognizable as a Scottish Terrier with features such as pointed ears, a beard, short legs, and a terrier-shaped body.
+- Incorporate the user's customization request when one is provided.
+- If no customization is provided, create a fun Carnegie Mellon-themed version of Scotty.
+- Keep the artwork readable in a monospace terminal.
+- Do not use Markdown image syntax.
+- You may include a short caption underneath the ASCII art.
+- Return primarily the ASCII art rather than an explanation.
