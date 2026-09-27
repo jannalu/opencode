@@ -2,7 +2,7 @@
 export function deactivate() {}
 
 import * as vscode from "vscode"
-import { buildExplanationPrompt } from "./explain"
+import { buildCodeSuggestionPrompt, buildExplanationPrompt } from "./explain"
 
 const TERMINAL_NAME = "opencode"
 const LEARN_TERMINAL_NAME = "opencode learn preview"
@@ -84,6 +84,46 @@ export function activate(context: vscode.ExtensionContext) {
     })
   })
 
+  const suggestCodeDisposable = vscode.commands.registerCommand("opencode.suggestCode", async () => {
+    if (!learnModePreview) {
+      await vscode.window.showInformationMessage("Enable Learn Mode Preview before asking opencode for a suggestion.")
+      return
+    }
+
+    const activeEditor = vscode.window.activeTextEditor
+    if (!activeEditor) {
+      await vscode.window.showInformationMessage("Open a code file before asking opencode for a suggestion.")
+      return
+    }
+
+    const document = activeEditor.document
+    const workspaceFolder = vscode.workspace.getWorkspaceFolder(document.uri)
+    if (!workspaceFolder) {
+      await vscode.window.showInformationMessage("Open the current file in a workspace before requesting a suggestion.")
+      return
+    }
+
+    const cursor = activeEditor.selection.active
+    const startLine = Math.max(0, cursor.line - 30)
+    const endLine = Math.min(document.lineCount - 1, cursor.line + 30)
+    const prompt = buildCodeSuggestionPrompt({
+      relativePath: vscode.workspace.asRelativePath(document.uri),
+      languageId: document.languageId,
+      text: document.getText(
+        new vscode.Range(startLine, 0, endLine, document.lineAt(endLine).text.length),
+      ),
+      startLine,
+      endLine,
+      cursorLine: cursor.line,
+      cursorCharacter: cursor.character,
+    })
+
+    await openTerminal({ prompt, submit: true, agent: "plan", reuse: true }).catch(async (error) => {
+      const message = error instanceof Error ? error.message : String(error)
+      await vscode.window.showErrorMessage(`Unable to suggest code: ${message}`)
+    })
+  })
+
   const toggleLearnModePreviewDisposable = vscode.commands.registerCommand(
     "opencode.toggleLearnModePreview",
     async () => {
@@ -101,6 +141,7 @@ export function activate(context: vscode.ExtensionContext) {
     openTerminalDisposable,
     addFilepathDisposable,
     explainSelectionDisposable,
+    suggestCodeDisposable,
     toggleLearnModePreviewDisposable,
   )
 

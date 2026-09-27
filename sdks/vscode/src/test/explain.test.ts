@@ -1,5 +1,5 @@
 import * as assert from "node:assert/strict"
-import { buildExplanationPrompt, selectedLineRange } from "../explain"
+import { buildCodeSuggestionPrompt, buildExplanationPrompt, selectedLineRange } from "../explain"
 
 suite("Explain selected code", () => {
   test("uses the selected line range", () => {
@@ -51,5 +51,24 @@ suite("Explain selected code", () => {
 
     assert.match(prompt, /````markdown/)
     assert.ok(prompt.endsWith("````"))
+  })
+
+  test("builds a beginner-friendly suggestion request with cursor context", () => {
+    const prompt = buildCodeSuggestionPrompt({
+      relativePath: "src/example.ts",
+      languageId: "typescript",
+      text: "function total(values: number[]) {\n  \n}",
+      startLine: 9,
+      endLine: 11,
+      cursorLine: 10,
+      cursorCharacter: 2,
+    })
+
+    assert.match(prompt, /@src\/example\.ts#L11/)
+    assert.match(prompt, /Cursor: line 11, column 3/)
+    assert.match(prompt, /Context lines: 10-12/)
+    assert.match(prompt, /function total/)
+    assert.match(prompt, /beginner-friendly explanation/)
+    assert.match(prompt, /Do not modify any files/)
   })
 })

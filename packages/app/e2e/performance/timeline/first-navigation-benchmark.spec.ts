@@ -9,7 +9,7 @@ import {
   stressDraftHref,
   stressSessionHref,
 } from "./timeline-test-helpers"
-import { waitForStableTimeline } from "./session-tab-switch-probe"
+import { waitForStableTimeline } from "./ses sion-tab-switch-probe"
 
 const contentSelector = '[data-message-id], [data-component="prompt-input"]'
 const draftID = "draft_first_navigation"

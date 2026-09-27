@@ -51,6 +51,12 @@
         "enablement": "opencode.learnModePreview && editorHasSelection"
       },
       {
+        "command": "opencode.suggestCode",
+        "title": "Suggest Code at Cursor",
+        "category": "opencode",
+        "enablement": "opencode.learnModePreview && editorTextFocus"
+      },
+      {
         "command": "opencode.toggleLearnModePreview",
         "title": "Toggle Learn Mode Preview",
         "category": "opencode"
@@ -64,6 +70,11 @@
         }
       ],
       "editor/context": [
+        {
+          "command": "opencode.suggestCode",
+          "when": "opencode.learnModePreview && editorTextFocus",
+          "group": "navigation"
+        },
         {
           "command": "opencode.explainSelection",
           "when": "opencode.learnModePreview && editorHasSelection",
