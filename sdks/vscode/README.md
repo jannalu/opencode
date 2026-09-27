@@ -12,6 +12,7 @@ This extension requires the [opencode CLI](https://opencode.ai) to be installed 
 - **New Session**: Use `Cmd+Shift+Esc` (Mac) or `Ctrl+Shift+Esc` (Windows/Linux) to start a new opencode terminal session, even if one is already open. You can also click the opencode button in the UI.
 - **Context Awareness**: Automatically share your current selection or tab with opencode.
 - **File Reference Shortcuts**: Use `Cmd+Option+K` (Mac) or `Alt+Ctrl+K` (Linux/Windows) to insert file references. For example, `@File#L37-42`.
+- **Explain Selected Code**: Run **Toggle Learn Mode Preview**, then highlight code, right-click, and select **Explain Selected Code** to use a reusable, read-only Plan session for beginner-friendly explanations.
 
 ## Support
 

@@ -43,12 +43,30 @@
       {
         "command": "opencode.addFilepathToTerminal",
         "title": "Add Filepath to Terminal"
+      },
+      {
+        "command": "opencode.explainSelection",
+        "title": "Explain Selected Code",
+        "category": "opencode",
+        "enablement": "opencode.learnModePreview && editorHasSelection"
+      },
+      {
+        "command": "opencode.toggleLearnModePreview",
+        "title": "Toggle Learn Mode Preview",
+        "category": "opencode"
       }
     ],
     "menus": {
       "editor/title": [
         {
           "command": "opencode.openNewTerminal",
+          "group": "navigation"
+        }
+      ],
+      "editor/context": [
+        {
+          "command": "opencode.explainSelection",
+          "when": "opencode.learnModePreview && editorHasSelection",
           "group": "navigation"
         }
       ]
